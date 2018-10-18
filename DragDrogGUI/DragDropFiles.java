@@ -106,9 +106,7 @@ public class DragDropFiles extends JFrame {
         tree.expandRow(1);
         tree.setRowHeight(0);
 
-        //Handles the tree node selection event that triggered by user selection
-        //Identify which tree node(file name) has been selected, for downloading.
-        //For more info, see TreeSelectionListener Class in Java
+        
         tree.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent e) {
                 //DefaultMutableTreeNode node = (DefaultMutableTreeNode)
@@ -128,13 +126,13 @@ public class DragDropFiles extends JFrame {
         tree.setTransferHandler(new TransferHandler() {
 
             public boolean canImport(TransferHandler.TransferSupport info) {
-                // we'll only support drops (not clip-board paste)
+                
                 if (!info.isDrop()) {
                     return false;
                 }
-                info.setDropAction(COPY); //Tony added
+                info.setDropAction(COPY); 
                 info.setShowDropLocation(true);
-                // we import Strings and files
+                
                 if (!info.isDataFlavorSupported(DataFlavor.stringFlavor) &&
                 		!info.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
                     return false;
@@ -148,15 +146,12 @@ public class DragDropFiles extends JFrame {
                 TreePath path = dl.getPath();
                 //***********
                 
-                // we don't support invalid paths or descendants of the names folder
-                //if (path == null || namesPath.isDescendant(path)) {
-                //    return false;
-               // }
+                
                 return true;
             }
 
             public boolean importData(TransferHandler.TransferSupport info) {            	
-            		// if we can't handle the import, say so
+            		
                 if (!canImport(info)) {
                     return false;
                 }
@@ -187,8 +182,8 @@ public class DragDropFiles extends JFrame {
                     return false;
                 }
                 
-                // if child index is -1, the drop was on top of the path, so we'll
-                // treat it as inserting at the end of that path's list of children
+                
+                
                 if (childIndex == -1) {
                     childIndex = tree.getModel().getChildCount(path.getLastPathComponent());
                 }
@@ -226,9 +221,7 @@ public class DragDropFiles extends JFrame {
         download = new JButton("Download");
         download.addActionListener(new ActionListener() { 
         	  public void actionPerformed(ActionEvent e) { 
-        	    //You have to program here in this method in response to downloading a file from the cloud,
-        		//Refer to TreePath class about how to extract the bucket name and file name out of 
-        		//the downloadPath object.
+        	    
         	    if(downloadPath != null) {
         	    	/*
         	    		JOptionPane.showMessageDialog(null, "You like to downloand a file from cloud from buckets:" + 
@@ -251,21 +244,7 @@ public class DragDropFiles extends JFrame {
         	    	{
         	    		label.setText("Downloaded **" + key + "** successfully!");
         	    	}
-        	    	/*
-        	    	try {
-        	    		
-	        	    	reader = new BufferedReader(new InputStreamReader(object.getObjectContent()));
-	        	    	writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(key)));
-	        	        while (true) {
-	        	            String line = reader.readLine();
-	        	            if (line == null) break;
-	
-	        	            writer.write(line+"\n");
-	        	        }
-	        	        writer.close();
-	        	        reader.close();
-        	    	}catch(IOException exp) {}
-        	    	*/
+        	    	
         	    	
         	    	
         	    	
